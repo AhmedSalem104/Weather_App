@@ -67,7 +67,7 @@
 
             <div class="position-Div  py-4 px-5">
                 <div class="position-relative searchInputDiv  ">
-                    <input onkeydown="getWeatherCountry()" id="searchInput" class="searchInput w-100 p-4 rounded-5" type="text" placeholder="Find Your Location"
+                    <input  id="searchInput" class="searchInput w-100 p-4 rounded-5" type="text" placeholder="Find Your Location"
                         alt="searchInput" name="searchInput">
                     <div class="buttonSubscribe"><button id="Find" class="p-3" >Find</button></div>
                 </div>
@@ -77,18 +77,18 @@
                             <div id="leftCard" class="card  text-white mb-3 " style="height: 27rem; ">
                                 <div class="card-header d-flex justify-content-between ">
                                     <p id="today"> Today</p>
-                                    <p id="dateToday" >dateToday</p>
+                                    <p id="TodayDateNumber" >dateToday</p>
                                 </div>
                                 <div class="card-body ">
                                     <h5 class="card-title text-left" id="cityName">Country  </h5>
                                     <h1 id="heatindex_C">25 </h1>
-                                    <img id="logo_today" class="w-25" src="" alt="">
+                                    <img id="Today-image" class="w-25" src="" alt="">
                                     <p id="WeatherCondition" class="my-2">WeatherCondition</p>
                                     <ul class="d-flex p-0">
-                                        <li><img src="images/icon-umberella.png" alt=""> <span class="px-1">20%</span>
+                                        <li><img src="images/icon-umberella.png" alt=""> <span id="todayHumidity" class="px-1"></span>
                                         </li>
-                                        <li><img src="images/icon-wind.png" alt=""><span class="px-1">18km/h</span></li>
-                                        <li><img src="images/icon-compass.png" alt=""><span class="px-1">East</span>
+                                        <li><img src="images/icon-wind.png" alt=""><span id="todayWind_kph" class="px-1"></span></li>
+                                        <li><img src="images/icon-compass.png" alt=""><span id="todayWindDir" class="px-1"></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -97,13 +97,13 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div id="CenterCard" class="card  text-white mb-3 " style="height: 27rem;">
                                 <div class="card-header d-flex justify-content-center ">
-                                    <p id="Tommorow"></p>
+                                    <p class="NextDay"></p>
                                 </div>
                                 <div class="card-body ">
-                                    <img id="logo_tommorow" class="w-25" src="" alt="">
-                                    <h1 id="TommorowMaxDeg">max Degree</h1>
-                                    <h6 id="TommorowMixDeg" class="card-title text-left"> min Degree</h6>
-                                    <p id="WeatherConditionTommorow" class="my-5">WeatherCondition</p>
+                                    <img  class="nextDayImage w-25" src="" alt="">
+                                    <h1 class="nextDayMaxDeg"></h1>
+                                    <h6  class="nextDayMinDeg card-title text-left"> </h6>
+                                    <p  class="nextDayWeatherCondition my-5">WeatherCondition</p>
 
                                 </div>
                             </div>
@@ -111,13 +111,12 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div id="RightCard" class="card  text-white  " style="height: 27rem;">
                                 <div class="card-header d-flex justify-content-center ">
-                                    <p id="afterTommorow">afterTommorow</p>
-                                </div>
+                                    <p class="NextDay"></p>                                </div>
                                 <div class="card-body ">
-                                    <img id="logo_AfterTommorow" class="w-25" src="" alt="">
-                                    <h1 id="AfterTommorowMaxDeg">25</h1>
-                                    <h6 id="AfterTommorowMinDeg" class="card-title text-left"> 25</h6>
-                                    <p id="WeatherConditionAfterTommorow" class="my-5">WeatherCondition</p>
+                                    <img  class=" nextDayImage w-25" src="" alt="">
+                                    <h1 class="nextDayMaxDeg"></h1>
+                                    <h6  class="nextDayMinDeg card-title text-left"> </h6>
+                                    <p  class="nextDayWeatherCondition my-5">WeatherCondition</p>
                                 </div>
                             </div>
                         </div>

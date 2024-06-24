@@ -1,138 +1,84 @@
 
-let FindBtn = document.querySelector("#Find")
-FindBtn.addEventListener("click", () => {
-   getWeatherCountry()
-})
 
-async function getWeatherCountry() {
-   let searchInput = document.querySelector("#searchInput")
-   let cityName = document.querySelector("#cityName")
-   console.log(searchInput.value)
-   if (searchInput.value != "") {
-      var res = await fetch(`https://api.weatherapi.com/v1/search.json?key=efee43a4d17e4f49a5e153453241106&q=${searchInput.value}`);
-      var finalresult = await res.json()
-      console.log(finalresult)
-      cityName.innerHTML = finalresult[0].name
+let FindBtn = document.querySelector("#Find")
+let searchInput = document.querySelector("#searchInput")
+
+let TodayDate = document.querySelector("#today")
+let TodayTemp = document.querySelector("#heatindex_C")
+let TodaycityName = document.querySelector("#cityName")
+let TodayImage = document.querySelector("#Today-image")
+let todayWindDir = document.querySelector("#todayWindDir")
+let todayHumidity = document.querySelector("#todayHumidity")
+let todayWind_kph = document.querySelector("#todayWind_kph")
+let TodayDateNumber = document.querySelector("#TodayDateNumber")
+let TodayWeatherCondition = document.querySelector("#WeatherCondition")
+
+let NextDay = document.getElementsByClassName("NextDay")
+let nextDayImage = document.getElementsByClassName("nextDayImage")
+let nextDayMinDeg = document.getElementsByClassName("nextDayMinDeg")
+let nextDayMaxDeg = document.getElementsByClassName("nextDayMaxDeg")
+let nextDayWeatherCondition = document.getElementsByClassName("nextDayWeatherCondition")
+
+
+// start App 
+async function startApp(searchData = "cairo") {
+   let weatherData = await getWeatherCountry(searchData)
+   if (!weatherData.error) {
+
+      displayTodayData(weatherData)
+      displayNextDayData(weatherData)
+
+   }
+
+}
+startApp()
+
+
+
+// Fetch API
+async function getWeatherCountry(cityName) {
+   var res = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=efee43a4d17e4f49a5e153453241106&q=${cityName}&days=3`);
+   var finalresult = await res.json()
+   console.log(finalresult)
+   return finalresult
+}
+// display Today Data
+function displayTodayData(data) {
+   let todayDate = new Date();
+   TodayDate.innerHTML = todayDate.toLocaleDateString("en-US", { weekday: "long" })
+   TodayDateNumber.innerHTML = `${todayDate.getDate()} ${todayDate.toLocaleDateString("en-US", { month: "long" })}`;
+
+   TodaycityName.innerHTML = data.location.name;
+   TodayTemp.innerHTML = data.current.temp_c;
+   TodayImage.setAttribute("src", data.current.condition.icon)
+   TodayWeatherCondition.innerHTML = data.current.condition.text
+   todayHumidity.innerHTML = `${data.current.humidity}%`
+   todayWind_kph.innerHTML = `${data.current.wind_kph}km/h`
+   todayWindDir.innerHTML = data.current.wind_dir
+}
+// display NextDay Data
+function displayNextDayData(data) {
+   let forecastData = data.forecast.forecastday;
+   for (let i = 0; i < 2; i++) {
+
+      let nextDate = new Date(forecastData[i + 1].date);
+      NextDay[i].innerHTML = nextDate.toLocaleDateString("en-US", { weekday: "long" })
+
+      nextDayMaxDeg[i].innerHTML = `${forecastData[i + 1].day.maxtemp_c}°c`;
+      nextDayMinDeg[i].innerHTML = `${forecastData[i + 1].day.mintemp_c}°c`;
+      nextDayImage[i].setAttribute("src", forecastData[i + 1].day.condition.icon);
+      nextDayWeatherCondition[i].innerHTML = forecastData[i + 1].day.condition.text
    }
 }
 
-async function getWeatherDays() {
-   var res = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=efee43a4d17e4f49a5e153453241106&q=07112&days=7`);
-   var finalresult = await res.json()
-   console.log(finalresult)
+searchInput.addEventListener("keyup",  ()=> {
+   let searchData = searchInput.value
+   startApp(searchData)
+})
 
-   let dateToday = finalresult.forecast.forecastday[0].date
-   let dateTommorow = finalresult.forecast.forecastday[1].date
-   let dateAfterTommorow = finalresult.forecast.forecastday[2].date
-   getDays(dateToday, dateTommorow, dateAfterTommorow)
+FindBtn.addEventListener("click",  ()=> {
+   let searchData = searchInput.value
+   startApp(searchData)
+})
 
-   /*  let todayheatMaxTemp = Array.from(finalresult.current.last_updated)
-      console.log(todayheatMaxTemp.splice(0,10).join("")) */
-
-
-   let todayheatMaxTemp = finalresult.forecast.forecastday[0].day.maxtemp_c;
-   let todayheatMinTemp = finalresult.forecast.forecastday[0].day.mintemp_c;
-   let todayText = finalresult.forecast.forecastday[0].day.condition.text;
-
-   let tommorowheatMaxTemp = finalresult.forecast.forecastday[1].day.maxtemp_c;
-   let tommorowMinTemp = finalresult.forecast.forecastday[1].day.mintemp_c;
-   let tommorowText = finalresult.forecast.forecastday[1].day.condition.text;
-
-   let afterTommorowheatMaxTemp = finalresult.forecast.forecastday[2].day.maxtemp_c;
-   let afterTommorowheatMinTemp = finalresult.forecast.forecastday[2].day.mintemp_c;
-   let afterTommorowText = finalresult.forecast.forecastday[2].day.condition.text;
-
-   let logo_today = finalresult.forecast.forecastday[0].day.condition.icon;
-   let logo_Tommorow = finalresult.forecast.forecastday[1].day.condition.icon;
-   let logo_AfterTommorow = finalresult.forecast.forecastday[2].day.condition.icon;
-
-
-
-   let icon_today = document.querySelector("#logo_today")
-   icon_today.setAttribute("src", logo_today)
-
-   let heatMaxTemp = document.querySelector("#heatindex_C")
-   let WeatherCondition = document.querySelector("#WeatherCondition")
-
-   heatMaxTemp.innerHTML = `${todayheatMaxTemp}°C`
-   WeatherCondition.innerHTML = `${todayText}`
-
-
-
-
-   let icon_tommorow = document.querySelector("#logo_tommorow")
-   icon_tommorow.setAttribute("src", logo_Tommorow)
-
-   let TommorowMaxDeg = document.querySelector("#TommorowMaxDeg")
-   TommorowMaxDeg.innerHTML = `${tommorowheatMaxTemp}°C`
-
-   let TommorowMixDeg = document.querySelector("#TommorowMixDeg")
-   TommorowMixDeg.innerHTML = `${tommorowMinTemp}°C`
-
-   let WeatherConditionTommorow = document.querySelector("#WeatherConditionTommorow")
-   WeatherConditionTommorow.innerHTML = tommorowText
-
-
-
-
-
-   let icon_AfterTommorow = document.querySelector("#logo_AfterTommorow")
-   icon_AfterTommorow.setAttribute("src", logo_AfterTommorow)
-
-   let AfterTommorowMaxDeg = document.querySelector("#AfterTommorowMaxDeg")
-   AfterTommorowMaxDeg.innerHTML = `${afterTommorowheatMaxTemp}°C`
-
-   let AfterTommorowMinDeg = document.querySelector("#AfterTommorowMinDeg")
-   AfterTommorowMinDeg.innerHTML = `${afterTommorowheatMinTemp}°C`
-
-   let WeatherConditionAfterTommorow = document.querySelector("#WeatherConditionAfterTommorow")
-   WeatherConditionAfterTommorow.innerHTML = afterTommorowText
-
-
-
-}
-function getDays(dateToday, dateTommorow, dateAfterTommorow) {
-   let today = document.querySelector("#today")
-   let dateTodayshourt = document.querySelector("#dateToday")
-   let Tommorow = document.querySelector("#Tommorow")
-   let afterTommorow = document.querySelector("#afterTommorow")
-   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-   let dateTodayObj = new Date(dateToday);
-   let dateTodayResult = days[dateTodayObj.getDay()];
-
-   let dateTommorowObj = new Date(dateTommorow);
-   let dateTommorowResult = days[dateTommorowObj.getDay()];
-
-   let dateAfterTommorowObj = new Date(dateAfterTommorow);
-   let dateAfterTommorowResult = days[dateAfterTommorowObj.getDay()];
-
-
-   today.innerHTML = dateTodayResult
-   dateTodayshourt.innerHTML = ""
-
-   Tommorow.innerHTML = dateTommorowResult
-   afterTommorow.innerHTML = dateAfterTommorowResult
-}
-
-function getGeoLocation() {
-   const successCallback = (position) => {
-      const coord = position.coords;
-
-      console.log(coord.accuracy);
-      console.log(coord.latitude);
-      console.log(coord.longitude);
-   };
-
-   const errorCallback = (error) => {
-      console.log(error);
-   };
-
-   navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-
-}
-
-
-getWeatherDays()
-getGeoLocation()
 
