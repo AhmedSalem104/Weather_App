@@ -21,25 +21,23 @@ let nextDayWeatherCondition = document.getElementsByClassName("nextDayWeatherCon
 
 
 // start App 
-async function startApp(searchData = "cairo") {
-   let weatherData = await getWeatherCountry(searchData)
-   if (!weatherData.error) {
+async function startApp(searchData = "Cairo") {
 
+ 
+   let weatherData = await getWeatherCountry(searchData )
+   if (!weatherData.error) {
       displayTodayData(weatherData)
       displayNextDayData(weatherData)
-
    }
 
 }
 startApp()
 
-
-
 // Fetch API
 async function getWeatherCountry(cityName) {
+
    var res = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=efee43a4d17e4f49a5e153453241106&q=${cityName}&days=3`);
    var finalresult = await res.json()
-   console.log(finalresult)
    return finalresult
 }
 // display Today Data
@@ -70,15 +68,24 @@ function displayNextDayData(data) {
       nextDayWeatherCondition[i].innerHTML = forecastData[i + 1].day.condition.text
    }
 }
-
-searchInput.addEventListener("keyup",  ()=> {
+searchInput.addEventListener("keyup", () => {
+   let searchData = searchInput.value
+   startApp(searchData)
+})
+FindBtn.addEventListener("click", () => {
    let searchData = searchInput.value
    startApp(searchData)
 })
 
-FindBtn.addEventListener("click",  ()=> {
-   let searchData = searchInput.value
-   startApp(searchData)
-})
-
+function getlocationUser() {
+   if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+         let latitude = pos.coords.latitude
+         let longitude = pos.coords.longitude
+      })
+   }
+   else {
+      alert("Your pc not support geolocation  ")
+   }
+}
 
