@@ -20,19 +20,21 @@ let nextDayMaxDeg = document.getElementsByClassName("nextDayMaxDeg")
 let nextDayWeatherCondition = document.getElementsByClassName("nextDayWeatherCondition")
 
 
-// start App 
-async function startApp(searchData = "Cairo") {
 
- 
-   let weatherData = await getWeatherCountry(searchData )
+
+getlocationUser()
+
+
+// start App 
+async function startApp(searchData = "cairo") {
+
+   let weatherData = await getWeatherCountry(searchData)
    if (!weatherData.error) {
       displayTodayData(weatherData)
       displayNextDayData(weatherData)
    }
 
 }
-startApp()
-
 // Fetch API
 async function getWeatherCountry(cityName) {
 
@@ -68,6 +70,28 @@ function displayNextDayData(data) {
       nextDayWeatherCondition[i].innerHTML = forecastData[i + 1].day.condition.text
    }
 }
+// get cityName from getlocation by use (latitude,longitude)
+function getlocationUser() {
+   if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async function (pos) {
+         let latitude = pos.coords.latitude
+         let longitude = pos.coords.longitude
+         let cityName = await getCityNameFromGeoloction(latitude, longitude)
+         startApp(cityName)
+      })
+   }
+   else {
+      alert("Your pc not support geolocation  ")
+   }
+}
+// get city name
+async function getCityNameFromGeoloction(latitude, longitude){
+   const apiKey = 'b44d1dc21ffe4df5b558aab7317643a0';
+   const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+   let data = await fetch(apiUrl)
+   let resultApi = await data.json()
+   return resultApi.results[0].components.city
+}
 searchInput.addEventListener("keyup", () => {
    let searchData = searchInput.value
    startApp(searchData)
@@ -77,15 +101,4 @@ FindBtn.addEventListener("click", () => {
    startApp(searchData)
 })
 
-function getlocationUser() {
-   if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (pos) {
-         let latitude = pos.coords.latitude
-         let longitude = pos.coords.longitude
-      })
-   }
-   else {
-      alert("Your pc not support geolocation  ")
-   }
-}
 
