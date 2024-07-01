@@ -11,6 +11,29 @@
 </head>
 
 <body>
+    <!--  window loading  -->
+    <div class="loading">
+        <span class="loader"></span>
+    </div>
+
+    <!--  color setting  -->
+    <div class="coloring-option position-fixed d-flex align-items-start">
+        <div class="colors shadow bg-white p-2">
+            <h3>Colors</h3>
+            <ul class="d-flex list-unstyled">
+
+            </ul>
+        </div>
+        <div class="colors-icon shadow  bg-white p-2">
+            <i class="fa-solid fa-gear fs-2"></i>
+        </div>
+    </div>
+
+
+
+
+
+
     <header class="">
         <nav class="navbar navbar-expand-lg  p-3">
             <div class="container-fluid">
@@ -67,28 +90,31 @@
 
             <div class="position-Div  py-4 px-5">
                 <div class="position-relative searchInputDiv  ">
-                    <input  id="searchInput" class="searchInput w-100 p-4 rounded-5" type="text" placeholder="Find Your Location"
-                        alt="searchInput" name="searchInput">
-                    <div class="buttonSubscribe"><button id="Find" class="p-3" >Find</button></div>
+                    <input id="searchInput" class="searchInput w-100 p-4 rounded-5" type="text"
+                        placeholder="Find Your Location" alt="searchInput" name="searchInput">
+                    <div class="buttonSubscribe"><button id="Find" class="p-3">Find</button></div>
                 </div>
                 <div class="cards my-5">
                     <div class="row g-0 ">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div id="leftCard" class="card  text-white mb-3 " style="height: 27rem; ">
                                 <div class="card-header d-flex justify-content-between ">
-                                    <p id="today"> Today</p>
-                                    <p id="TodayDateNumber" >dateToday</p>
+                                    <p class="selected-color " id="today"> Today</p>
+                                    <p id="TodayDateNumber">dateToday</p>
                                 </div>
                                 <div class="card-body ">
-                                    <h5 class="card-title text-left" id="cityName">Country  </h5>
+                                    <h5 class="card-title text-left selected-color " id="cityName">Country </h5>
                                     <h1 id="heatindex_C">25 </h1>
                                     <img id="Today-image" class="w-25" src="" alt="">
                                     <p id="WeatherCondition" class="my-2">WeatherCondition</p>
                                     <ul class="d-flex p-0">
-                                        <li><img src="images/icon-umberella.png" alt=""> <span id="todayHumidity" class="px-1"></span>
+                                        <li><img src="images/icon-umberella.png" alt=""> <span id="todayHumidity"
+                                                class="px-1 selected-color"></span>
                                         </li>
-                                        <li><img src="images/icon-wind.png" alt=""><span id="todayWind_kph" class="px-1"></span></li>
-                                        <li><img src="images/icon-compass.png" alt=""><span id="todayWindDir" class="px-1"></span>
+                                        <li><img src="images/icon-wind.png" alt=""><span id="todayWind_kph"
+                                                class="px-1 selected-color"></span></li>
+                                        <li><img src="images/icon-compass.png" alt=""><span id="todayWindDir"
+                                                class="px-1 selected-color"></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -97,13 +123,13 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div id="CenterCard" class="card  text-white mb-3 " style="height: 27rem;">
                                 <div class="card-header d-flex justify-content-center ">
-                                    <p class="NextDay"></p>
+                                    <p class="NextDay selected-color"></p>
                                 </div>
                                 <div class="card-body ">
-                                    <img  class="nextDayImage w-25" src="" alt="">
-                                    <h1 class="nextDayMaxDeg"></h1>
-                                    <h6  class="nextDayMinDeg card-title text-left"> </h6>
-                                    <p  class="nextDayWeatherCondition my-5">WeatherCondition</p>
+                                    <img class="nextDayImage w-25" src="" alt="">
+                                    <h1 class="nextDayMaxDeg "></h1>
+                                    <h6 class="nextDayMinDeg card-title text-left "> </h6>
+                                    <p class="nextDayWeatherCondition  my-5">WeatherCondition</p>
 
                                 </div>
                             </div>
@@ -111,12 +137,13 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div id="RightCard" class="card  text-white  " style="height: 27rem;">
                                 <div class="card-header d-flex justify-content-center ">
-                                    <p class="NextDay"></p>                                </div>
+                                    <p class="NextDay selected-color"></p>
+                                </div>
                                 <div class="card-body ">
-                                    <img  class=" nextDayImage w-25" src="" alt="">
+                                    <img class=" nextDayImage w-25" src="" alt="">
                                     <h1 class="nextDayMaxDeg"></h1>
-                                    <h6  class="nextDayMinDeg card-title text-left"> </h6>
-                                    <p  class="nextDayWeatherCondition my-5">WeatherCondition</p>
+                                    <h6 class="nextDayMinDeg card-title text-left"> </h6>
+                                    <p class="nextDayWeatherCondition my-5">WeatherCondition</p>
                                 </div>
                             </div>
                         </div>
@@ -152,6 +179,7 @@
         </div>
     </footer>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/main.js"> </script>
 
 </body>

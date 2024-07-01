@@ -85,7 +85,7 @@ function getlocationUser() {
    }
 }
 // get city name
-async function getCityNameFromGeoloction(latitude, longitude){
+async function getCityNameFromGeoloction(latitude, longitude) {
    const apiKey = 'b44d1dc21ffe4df5b558aab7317643a0';
    const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
    let data = await fetch(apiUrl)
@@ -100,5 +100,49 @@ FindBtn.addEventListener("click", () => {
    let searchData = searchInput.value
    startApp(searchData)
 })
+
+
+// set colors 
+let colors = ["red", "gray", "orange", "yellow"]
+
+
+
+colors.forEach((color) => {
+
+   let li = document.createElement("li")
+   $(li).css("background-color", color)
+   $(".colors ul").append(li)
+
+})
+// change color 
+$(".colors li").click(function (e) {
+
+   let selectedColor = $(e.target).css("background-color")
+   localStorage.setItem("selectedColor", selectedColor)
+   $(".selected-color ").css("color", selectedColor)
+})
+// colors options
+$(".colors-icon").click(colseColorsOption)
+// function volors Option
+function colseColorsOption() {
+
+   let colorsWidth = $(".colors").outerWidth(true)
+   let left = $(".coloring-option").css("left") == "0px" ? `-${colorsWidth} ` : "0";
+   $(".coloring-option").animate({ left }, 300)
+}
+setTimeout(() => {
+   colseColorsOption()
+}, 1300);
+$(window).on("load", () => {
+   setTimeout(() => {
+      $(".loading").fadeOut(300)
+
+   }, 700);
+})
+$(window).on("load", () => {
+   let selectedColorLocalStorage = localStorage.getItem("selectedColor")
+   $(".selected-color ").css("color", selectedColorLocalStorage)
+})
+
 
 
